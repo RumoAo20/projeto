@@ -45,6 +45,7 @@ class ClienteController extends Controller
         $cliente->email = $request->email;
 
         $cliente->save();
+
         return Redirect::to('gestao/clientes/create');
 
     }
@@ -68,6 +69,7 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
+        $cliente= Cliente::find($id);
         return view('clientes.edit', ['cliente' => Cliente::findOrFail($id)]);
     }
 
@@ -80,7 +82,9 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente= Cliente::findOrFail($id);
+        $cliente->update($request->all());
+        return Redirect::to('gestao/clientes/'.$cliente->id.'/edit');
     }
 
     /**
