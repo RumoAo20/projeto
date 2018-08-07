@@ -24,34 +24,37 @@ Route::group(['middleware' => 'auth'], function () {
     #adminlte_routes
 });
 
-Route::get('gestao/produtos/getProdutos', 'ProdutoController@getProdutos')
-    ->name('produtos.getProdutos');
-
+//--------------------Fornecedores--------------------------------------------------------------------
 Route::get('gestao/fornecedores/getFornecedores', 'FornecedorController@getFornecedores')
     ->name('fornecedores.getFornecedores');
 
-Route::get('gestao/clientes/getClientes', 'ClienteController@getClientes')
-    ->name('clientes.getClientes');
-
-Route::get('gestao/colaboradores/getColaboradores', 'ColaboradorController@getColaboradores')
-    ->name('colaboradores.getColaboradores');
-
-
-
-Route::resource('gestao/produtos', 'ProdutoController');
-
 Route::resource('gestao/fornecedores', 'FornecedorController');
-
-Route::resource('gestao/clientes', 'ClienteController');
-
-Route::resource('gestao/colaboradores', 'ColaboradorController');
 
 Route::get('gestao/fornecedores/create', 'FornecedorController@create')
     ->name('fornecedores.create');
 
 Route::post('gestao/fornecedores/store', 'FornecedorController@store');
 
+
+
+//--------------------Clientes--------------------------------------------------------------------
+Route::get('gestao/clientes/getClientes', 'ClienteController@getClientes')
+    ->name('clientes.getClientes');
+
+Route::resource('gestao/clientes', 'ClienteController');
+
 Route::get('gestao/clientes/create', 'ClienteController@create')
     ->name('clientes.create');
 
 Route::post('gestao/clientes/store', 'ClienteController@store');
+
+//--------------------Colaboradores--------------------------------------------------------------------
+Route::get('gestao/colaboradores/getColaboradores', 'ColaboradorController@getColaboradores')
+    ->name('colaboradores.getColaboradores');
+
+Route::resource('gestao/colaboradores', 'ColaboradorController');
+
+Route::get('gestao/colaboradores/create', 'ColaboradorController@create')
+    ->name('colaboradores.create');
+
+Route::post('gestao/colaboradores/store', 'ColaboradorController@store');
