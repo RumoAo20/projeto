@@ -23,6 +23,9 @@
                             <th>CHNM</th>
                             <th>Descrição CHNM</th>
                             <th>Nome  -  Forma farmaceutica  -  Dosagem</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                     </table>
@@ -45,7 +48,13 @@
                             { data: 'numero_registo', name: 'numero_registo' },
                             { data: 'chnm', name: 'chnm' },
                             { data: 'descricao_chnm', name: 'descricao_chnm'},
-                            { data: 'nome_forma_dosagem', name: 'nome_forma_dosagem',}
+                            { data: 'nome_forma_dosagem', name: 'nome_forma_dosagem'},
+                            { data: 'encomendar', name: 'encomendar', orderable: false,
+                                searchable: false},
+                            { data: 'perfil', name: 'perfil', orderable: false,
+                                searchable: false},
+                            { data: 'apaga', name: 'apaga', orderable: false,
+                                searchable: false}
                         ]
                     });
                 });
