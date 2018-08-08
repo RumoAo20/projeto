@@ -17,7 +17,6 @@ class FornecedorController extends Controller
      */
     public function index()
     {
-
         return view('fornecedores.index');
     }
 
@@ -39,7 +38,6 @@ class FornecedorController extends Controller
      */
     public function store(Request $request)
     {
-
         $fornecedor= new Fornecedor();
         $fornecedor->nome = $request->nome;
         $fornecedor->nif = $request->nif;
@@ -72,7 +70,6 @@ class FornecedorController extends Controller
      */
     public function edit($id)
     {
-        $fornecedor= Fornecedor::find($id);
         return view('fornecedores.edit', ['fornecedor' => Fornecedor::findOrFail($id)]);
     }
 

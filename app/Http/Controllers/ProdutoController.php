@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Produto;
+use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\DataTables;
 
 class ProdutoController extends Controller
@@ -25,7 +26,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('produtos.create');
     }
 
     /**
@@ -36,7 +37,15 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $produto= new Produto();
+        $produto->numero_registo = $request->numero_registo;
+        $produto->chnm = $request->chnm;
+        $produto->descricao_chnm = $request->descricao_chnm;
+        $produto->nome_forma_dosagem = $request->nome_forma_dosagem;
+
+        $produto->save();
+        return Redirect::to('gestao/produtos/create');
     }
 
     /**
@@ -58,7 +67,7 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('produtos.edit', ['produto' => Produto::findOrFail($id)]);
     }
 
     /**
@@ -70,7 +79,9 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $produto= Produto::findOrFail($id);
+        $produto->update($request->all());
+        return Redirect::to('gestao/produtos/'.$produto->id.'/edit');
     }
 
     /**
@@ -88,11 +99,17 @@ class ProdutoController extends Controller
     public function getProdutos()
     {
         return Datatables::of(Produto::query())
-            ->addColumn('action', function ($produto) {
-                return '<a href="produtos/' . $produto->id . '/edit" class="btn btnprimary
-tooltips"><i class="fa fa-pencil fa fa-white"></i></a>';
+            ->addColumn('encomendar', function ($produto) {
+                return '<a href="{{ URL::to(\'gestao/produtos/encomendar\')}}" <button type="button" class="btn btn-block btn-primary"></i> Encomendar</a>';
             })
-            ->rawColumns(['estado','action'])
+            ->addColumn('perfil', function ($produto) {
+                return '<a href="produtos/' . $produto->id . '/edit" <button type="button" class="btn btn-block btn-primary"></i> Perfil</a>';
+            })
+            ->addColumn('apaga', function ($produto) {
+                return '<a href="{{ route(produtos.destroy ,$produto->id)}}" class="btn btnprimary
+tooltips"><i class="fa fa-close fa fa-white"></i></a>';
+            })
+            ->rawColumns(['encomendar','perfil','apaga'])
             ->make(true);
     }
 

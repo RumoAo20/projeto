@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Colaborador;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Redirect;
 
 class ColaboradorController extends Controller
 {
@@ -26,7 +25,7 @@ class ColaboradorController extends Controller
      */
     public function create()
     {
-        return view('colaboradores.create');
+        //
     }
 
     /**
@@ -37,14 +36,7 @@ class ColaboradorController extends Controller
      */
     public function store(Request $request)
     {
-        $colaborador= new Colaborador();
-        $colaborador->name = $request->name;
-        $colaborador->email = $request->email;
-        $colaborador->password = $request->password;
-
-
-        $colaborador->save();
-        return Redirect::to('gestao/colaboradores/create');
+        //
     }
 
     /**
