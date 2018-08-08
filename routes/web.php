@@ -24,7 +24,21 @@ Route::group(['middleware' => 'auth'], function () {
     #adminlte_routes
 });
 
-//--------------------Fornecedores--------------------------------------------------------------------
+
+//--------------------Produtos----------------------------------------------------------------
+Route::get('gestao/produtos/getProdutos', 'ProdutoController@getProdutos')
+    ->name('produtos.getProdutos');
+
+Route::resource('gestao/produtos', 'ProdutoController');
+
+Route::get('gestao/produtos/create', 'ProdutoController@create')
+    ->name('produtos.create');
+
+Route::post('gestao/produtos/store', 'ProdutoController@store');
+
+
+
+//--------------------Fornecedores----------------------------------------------------------------
 Route::get('gestao/fornecedores/getFornecedores', 'FornecedorController@getFornecedores')
     ->name('fornecedores.getFornecedores');
 
@@ -34,7 +48,6 @@ Route::get('gestao/fornecedores/create', 'FornecedorController@create')
     ->name('fornecedores.create');
 
 Route::post('gestao/fornecedores/store', 'FornecedorController@store');
-
 
 
 //--------------------Clientes--------------------------------------------------------------------
@@ -47,6 +60,7 @@ Route::get('gestao/clientes/create', 'ClienteController@create')
     ->name('clientes.create');
 
 Route::post('gestao/clientes/store', 'ClienteController@store');
+
 
 //--------------------Colaboradores--------------------------------------------------------------------
 Route::get('gestao/colaboradores/getColaboradores', 'ColaboradorController@getColaboradores')
