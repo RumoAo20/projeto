@@ -27,9 +27,9 @@
                             <th>Email</th>
                             <th>Tipo de produto</th>
                             <th>Designação comercial</th>
-                            <th>Encomendar</th>
-                            <th>Perfil</th>
-                            <th>Desabilitar</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                     </table>
