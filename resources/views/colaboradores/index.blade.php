@@ -23,7 +23,7 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Perfil</th>
-                            <th>Desabilitar</th>
+                            <th></th>
                         </tr>
                         </thead>
                     </table>
