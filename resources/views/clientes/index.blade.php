@@ -25,9 +25,9 @@
                             <th>Morada</th>
                             <th>Telemovel</th>
                             <th>Email</th>
-                            <th>Encomendar</th>
-                            <th>Perfil</th>
-                            <th>Desabilitar</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                     </table>
