@@ -24,31 +24,24 @@ Route::group(['middleware' => 'auth'], function () {
     #adminlte_routes
 });
 
-
-//--------------------Produtos----------------------------------------------------------------
-Route::get('gestao/produtos/getProdutos', 'ProdutoController@getProdutos')
-    ->name('produtos.getProdutos');
-
-Route::resource('gestao/produtos', 'ProdutoController');
-
-Route::get('gestao/produtos/create', 'ProdutoController@create')
-    ->name('produtos.create');
-
-Route::post('gestao/produtos/store', 'ProdutoController@store');
-
-
-
-//--------------------Fornecedores----------------------------------------------------------------
+//--------------------Fornecedores--------------------------------------------------------------------
 Route::get('gestao/fornecedores/getFornecedores', 'FornecedorController@getFornecedores')
     ->name('fornecedores.getFornecedores');
 
 Route::resource('gestao/fornecedores', 'FornecedorController');
 
-Route::get('gestao/fornecedores/create', 'FornecedorController@create')
-    ->name('fornecedores.create');
+Route::get('gestao/fornecedores/create', 'FornecedorController@create');
+
 
 Route::post('gestao/fornecedores/store', 'FornecedorController@store');
 
+Route::get('gestao/fornecedores/{fornecedor}/encomenda', 'EncomendaController@encomendar');
+
+Route::get('gestao/fornecedores/{fornecedor}/encomenda/create', 'EncomendaController@create');
+
+Route::post('gestao/fornecedores/adiciona', 'EncomendaController@store');
+
+Route::post('gestao/fornecedores/cancela', 'EncomendaController@cancelarEncomenda');
 
 //--------------------Clientes--------------------------------------------------------------------
 Route::get('gestao/clientes/getClientes', 'ClienteController@getClientes')
@@ -56,11 +49,12 @@ Route::get('gestao/clientes/getClientes', 'ClienteController@getClientes')
 
 Route::resource('gestao/clientes', 'ClienteController');
 
-Route::get('gestao/clientes/create', 'ClienteController@create')
-    ->name('clientes.create');
+Route::get('gestao/clientes/create', 'ClienteController@create');
+
 
 Route::post('gestao/clientes/store', 'ClienteController@store');
 
+Route::get('gestao/clientes/{cliente}/encomenda', 'ClienteController@encomenda');
 
 //--------------------Colaboradores--------------------------------------------------------------------
 Route::get('gestao/colaboradores/getColaboradores', 'ColaboradorController@getColaboradores')
@@ -68,7 +62,19 @@ Route::get('gestao/colaboradores/getColaboradores', 'ColaboradorController@getCo
 
 Route::resource('gestao/colaboradores', 'ColaboradorController');
 
-Route::get('gestao/colaboradores/create', 'ColaboradorController@create')
-    ->name('colaboradores.create');
+Route::get('gestao/colaboradores/create', 'ColaboradorController@create');
+
 
 Route::post('gestao/colaboradores/store', 'ColaboradorController@store');
+
+//--------------------Produtos----------------------------------------------------------------
+Route::get('gestao/produtos/getProdutos', 'ProdutoController@getProdutos')
+    ->name('produtos.getProdutos');
+
+Route::resource('gestao/produtos', 'ProdutoController');
+
+Route::get('gestao/produtos/create', 'ProdutoController@create');
+
+
+Route::post('gestao/produtos/store', 'ProdutoController@store');
+
