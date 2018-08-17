@@ -4,6 +4,17 @@
 @endsection
 
 @section('main-content')
+
+    {{--Lista com erros do formulario--}}
+
+    <div class ='alert alert-error'>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+
     <section class="content">
         <div class="row">
             <div class="col-md-3">
@@ -12,6 +23,7 @@
                     <div class="box-body box-profile">
 
                         {!! Form::open(['url' => 'gestao/clientes/store']) !!}
+
 
                         {!! Form::label('nome', 'Nome') !!}
                         {!! Form::input('text', 'nome', '', ['class' => 'form-control', '', 'placeholder' => 'Nome']) !!}
@@ -33,10 +45,22 @@
                         {!! Form::close() !!}
 
 
-                    </div>
-                    <!-- /.box-body -->
-                </div>
 
+                    </div>
+
+                    {{--Mensagem de sucesso--}}
+
+                    @if(Session::has('message'))
+                        <div class="alert alert-{{ Session::get('message-type') }} alert-dismissable">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            <i class="glyphicon glyphicon-{{ Session::get('message-type') == 'success' ? 'ok' : 'remove'}}"></i> {{ Session::get('message') }}
+                        </div>
+                @endif
+
+
+                    <!-- /.box-body -->
+
+                </div>
             </div>
             <!-- /.col -->
         </div>
