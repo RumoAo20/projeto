@@ -38,6 +38,9 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
 
+        $this->formValidationCriar($request);
+
+
         $produto= new Produto();
         $produto->numero_registo = $request->numero_registo;
         $produto->chnm = $request->chnm;
@@ -45,7 +48,9 @@ class ProdutoController extends Controller
         $produto->nome_forma_dosagem = $request->nome_forma_dosagem;
 
         $produto->save();
-        return Redirect::to('gestao/produtos/create');
+        return Redirect::to('gestao/produtos/create')
+            ->with('message', 'Produto criado com sucesso')
+            ->with('message-type', 'success');
     }
 
     /**
@@ -79,9 +84,14 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->formValidationEditar($request);
+
         $produto= Produto::findOrFail($id);
         $produto->update($request->all());
-        return Redirect::to('gestao/produtos/'.$produto->id.'/edit');
+        return Redirect::to('gestao/produtos/'.$produto->id.'/edit')
+            ->with('message', 'Produto editado com sucesso')
+            ->with('message-type', 'success');
     }
 
     /**
@@ -111,6 +121,41 @@ tooltips"><i class="fa fa-close fa fa-white"></i></a>';
             })
             ->rawColumns(['encomendar','perfil','apaga'])
             ->make(true);
+    }
+
+
+    public function formValidationCriar(Request $request){
+
+        $this->validate($request,[
+
+            'chnm' => 'required|digits:8|unique:produto',
+            'descricao_chnm' => 'required',
+            'nome_forma_dosagem' => 'required',
+
+        ],[
+            'chnm.required' => 'Precisa de preencher o código CHNM do produto',
+            'chnm.digits' => 'Atenção! o código CHNM tem de ter 8 caracteres, tendo estes de ser números',
+            'chnm.unique' => 'Já está registado um produto com esse código',
+            'descricao_chnm.required' => 'Precisa de preencher a descrição CHNM do produto',
+            'nome_forma_dosagem.required' => 'Precisa de preencher o Nome - Forma farmacêutica - Dosagem do produto',
+        ]);
+    }
+
+
+    public function formValidationEditar(Request $request){
+
+        $this->validate($request,[
+
+            'chnm' => 'required|digits:8',
+            'descricao_chnm' => 'required',
+            'nome_forma_dosagem' => 'required',
+
+        ],[
+            'chnm.required' => 'Não pode deixar o código CHNM do produto em branco',
+            'chnm.digits' => 'Atenção! o código CHNM tem de ter 8 caracteres, tendo estes de ser números',
+            'descricao_chnm.required' => 'Não pode deixar a descrição CHNM do produto em branco',
+            'nome_forma_dosagem.required' => 'Não pode deixar o Nome - Forma farmacêutica - Dosagem do produto em branco',
+        ]);
     }
 
 }

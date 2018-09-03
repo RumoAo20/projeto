@@ -37,6 +37,8 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $this->formValidationCriar($request);
+
         $cliente= new Cliente();
         $cliente->nome = $request->nome;
         $cliente->nif = $request->nif;
@@ -45,8 +47,9 @@ class ClienteController extends Controller
         $cliente->email = $request->email;
 
         $cliente->save();
-        return Redirect::to('gestao/clientes/create');
-
+        return Redirect::to('gestao/clientes/create')
+            ->with('message', 'Cliente criado com sucesso')
+            ->with('message-type', 'success');
     }
 
     /**
@@ -80,9 +83,14 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->formValidationEditar($request);
+
         $cliente= Cliente::findOrFail($id);
         $cliente->update($request->all());
-        return Redirect::to('gestao/clientes/'.$cliente->id.'/edit');
+        return Redirect::to('gestao/clientes/'.$cliente->id.'/edit')
+            ->with('message', 'Cliente editado com sucesso')
+            ->with('message-type', 'success');
     }
 
     /**
@@ -112,5 +120,54 @@ tooltips"><i class="fa fa-close fa fa-white"></i></a>';
             ->rawColumns(['encomendar','estado','action'])
             ->make(true);
 
+    }
+
+
+    public function formValidationCriar(Request $request){
+
+        $this->validate($request,[
+
+            'nome' => 'required',
+            'nif' => 'required|digits:9|unique:cliente',
+            'morada' => 'required',
+            'telemovel' => 'required|digits:9|unique:cliente',
+            'email' => 'required|email|unique:cliente',
+
+        ],[
+            'nome.required' => 'Precisa de preencher o nome do cliente',
+            'nif.required' => 'Precisa de preencher o NIF do cliente',
+            'nif.digits' => 'Atenção! O NIF apenas pode ter 9 caracteres, tendo estes de ser numeros',
+            'nif.unique' => 'Já está registado um cliente com esse NIF',
+            'morada.required' => 'Precisa de preencher a morada do cliente',
+            'telemovel.required' => 'Precisa de preencher o numero de telemovel do cliente',
+            'telemovel.digits' => 'Atenção! O numero de telemovel apenas pode ter 9 caracteres, tendo estes de ser numeros',
+            'telemovel.unique' => 'Já está registado um cliente com esse número de telemovel',
+            'email.required' => 'Precisa de preencher o email do cliente',
+            'email.email' => 'O email não tem o formato correto (exemplo correto: cliente@mail.com)',
+            'email.unique' => 'Já está registado um cliente com esse email',
+        ]);
+    }
+
+
+    public function formValidationEditar(Request $request){
+
+        $this->validate($request,[
+
+            'nome' => 'required',
+            'nif' => 'required|digits:9',
+            'morada' => 'required',
+            'telemovel' => 'required|digits:9',
+            'email' => 'required|email',
+
+        ],[
+            'nome.required' => 'Não pode deixar o Nome em branco',
+            'nif.required' => 'Não pode deixar o NIF em branco',
+            'nif.digits' => 'Atenção! O NIF apenas pode ter 9 caracteres, tendo estes de ser numeros',
+            'morada.required' => 'Não pode deixar a morada em branco',
+            'telemovel.required' => 'Não pode deixar o número de telemovel em branco',
+            'telemovel.digits' => 'Atenção! O numero de telemovel apenas pode ter 9 caracteres, tendo estes de ser numeros',
+            'email.required' => 'Não pode deixar email em branco',
+            'email.email' => 'O email não tem o formato correto (exemplo correto: cliente@mail.com)',
+        ]);
     }
 }
